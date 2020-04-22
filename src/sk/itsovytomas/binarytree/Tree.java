@@ -156,7 +156,9 @@ public class Tree {
     }
     public int getHeight(){
         // kolko krat sa my opakuje cyklus podla toho
-        // nezabudni nulovat pomocnu hodnotu 
+        // nezabudni nulovat pomocnu hodnotu
+
+        //
         return -1;
     }
 

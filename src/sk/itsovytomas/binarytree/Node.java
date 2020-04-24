@@ -70,6 +70,10 @@ public class Node {
     public void inOrder() { //  write tree left and right control that we have  node
 
          // Left  Visit right
+       /* if (isLeaf()) {
+            System.out.println(" under line is Leaf -----");
+        }*/
+
         if (this.left != null) {
             left.inOrder();
 

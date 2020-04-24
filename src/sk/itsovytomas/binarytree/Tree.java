@@ -85,7 +85,7 @@ public class Tree {
 
 
 
-    public Node getParrent(Node node){
+    public Node getParent(Node node){
         if(node==root){
             return null;
         }
@@ -109,39 +109,57 @@ public class Tree {
     public void remove (Node node){
         // 1 moznost , node je list:
         if(node.isLeaf()){
-            Node parrent = getParrent((node));
-            if(parrent == null)
+            Node parent = getParent((node));
+            if(parent == null)
                 return ;
-            if(parrent.getLeft()==node)
-                parrent.setLeft(null);
+            if(parent.getLeft()==node)
+                parent.setLeft(null); // left null
             else
-                parrent.setRight(null);
+                parent.setRight(null); // right null
             return;
         }
 
         // node ma jedneho potomka - praveho
         if(node.getLeft()==null && node.getRight()!=null){
-            Node parrent = getParrent(node);
-            if(parrent==null)
+            Node parent = getParent(node);
+            if(parent==null)
                 return;
-            if(parrent.getLeft()==node){
-                parrent.setLeft(node.getRight());
+
+            if(parent.getLeft()==node){ // is node left child my parent
+                parent.setLeft(node.getRight()); // true set left parent to node right child
 
             }
-            else
-                parrent.setRight(node.getRight());
+            else // node is right child our parent , set parent right child to node right child
+                parent.setRight(node.getRight());
         }
+
         // node ma jedneho potomka - lavy
+
+
         if(node.getLeft()!=null && node.getRight()==null){
-            Node parrent = getParrent(node);
-            if(parrent==null)
+            Node parent = getParent(node);
+            if(parent==null)
                 return;
-            if(parrent.getLeft()==node){
-                parrent.setLeft(node.getLeft());
+
+            if(parent.getLeft()==node){
+                parent.setLeft(node.getLeft());
 
             }
             else
-                parrent.setRight(node.getLeft());
+                parent.setRight(node.getLeft());
+        }
+
+
+        // node ma dvoch potomkov laveho a praveho
+        if ((node.getLeft() != null) && (node.getRight() != null)) {
+            Node parent = getParent(node);
+
+            if (parent == null) {
+                return; /// ked je parent null aj tak by sa mal spravit bez
+                // použitia parentu
+            }
+
+
         }
 
     }
@@ -149,6 +167,9 @@ public class Tree {
 
     public List<Node> getListOfLeafs() {
 
+     /*   if (root != null) {
+            root.inOrder();
+        }*/
     // use the function in order and every node check that have min 1 child
         // left or right if no push into List and
         return null;

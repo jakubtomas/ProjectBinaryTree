@@ -11,6 +11,7 @@ public class Main {
         Node node5 = new Node (30, "Pascal");
         Node node6 = new Node (29, "C++");
         Node node7 = new Node (22, "HTML 5");
+        Node node8 = new Node (4, "PHP");
         myTree.addNode(node1);
         myTree.addNode(node2);
         myTree.addNode(node3);
@@ -18,12 +19,13 @@ public class Main {
         myTree.addNode(node5);
         myTree.addNode(node6);
         myTree.addNode(node7);
+        myTree.addNode(node8);
 
         System.out.println();
         System.out.println("in order");
         myTree.printInOrder();
 
-        System.out.println();
+       /* System.out.println();
         System.out.println(" pre order");
         myTree.printPreOrder();
 
@@ -39,6 +41,6 @@ public class Main {
         System.out.println(" tree contain the number  " + myTree.containsKey(66));
 
         System.out.println();
-        System.out.println(" return parent " + myTree.getParrent(node3).getKey());
+        System.out.println(" return parent " + myTree.getParent(node3).getKey());*/
     }
 }

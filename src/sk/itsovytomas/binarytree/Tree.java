@@ -1,5 +1,6 @@
 package sk.itsovytomas.binarytree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tree {
@@ -59,7 +60,7 @@ public class Tree {
     }
 
     public boolean containsKey(int key) {
-         // check  that we have node with input int key
+        // check  that we have node with input int key
         // When we have  return true when no return false
 
         Node akt = root; // help value
@@ -84,35 +85,34 @@ public class Tree {
     }
 
 
-
-    public Node getParent(Node node){
-        if(node==root){
+    public Node getParent(Node node) {
+        if (node == root) {
             return null;
         }
 
         Node akt = root;
-        while(akt!=null){
-            if(akt.getLeft() ==node)
+        while (akt != null) {
+            if (akt.getLeft() == node)
                 return akt;
-            if(akt.getRight() ==node)
+            if (akt.getRight() == node)
                 return akt;
-            if(akt.getKey()>node.getKey())
-                akt=akt.getLeft();
+            if (akt.getKey() > node.getKey())
+                akt = akt.getLeft();
             else
-                akt=akt.getRight();
+                akt = akt.getRight();
 
         }
         return null;
     }
 
 
-    public void remove (Node node){
+    public void remove(Node node) {
         // 1 moznost , node je list:
-        if(node.isLeaf()){
+        if (node.isLeaf()) {
             Node parent = getParent((node));
-            if(parent == null)
-                return ;
-            if(parent.getLeft()==node)
+            if (parent == null)
+                return;
+            if (parent.getLeft() == node)
                 parent.setLeft(null); // left null
             else
                 parent.setRight(null); // right null
@@ -120,47 +120,124 @@ public class Tree {
         }
 
         // node ma jedneho potomka - praveho
-        if(node.getLeft()==null && node.getRight()!=null){
+        if (node.getLeft() == null && node.getRight() != null) {
             Node parent = getParent(node);
-            if(parent==null)
+            if (parent == null)
                 return;
 
-            if(parent.getLeft()==node){ // is node left child my parent
+            if (parent.getLeft() == node) { // is node left child my parent
                 parent.setLeft(node.getRight()); // true set left parent to node right child
 
-            }
-            else // node is right child our parent , set parent right child to node right child
+            } else // node is right child our parent , set parent right child to node right child
                 parent.setRight(node.getRight());
         }
 
         // node ma jedneho potomka - lavy
 
 
-        if(node.getLeft()!=null && node.getRight()==null){
+        if (node.getLeft() != null && node.getRight() == null) {
             Node parent = getParent(node);
-            if(parent==null)
+            if (parent == null)
                 return;
 
-            if(parent.getLeft()==node){
+            if (parent.getLeft() == node) {
                 parent.setLeft(node.getLeft());
 
-            }
-            else
+            } else
                 parent.setRight(node.getLeft());
         }
 
 
         // node ma dvoch potomkov laveho a praveho
         if ((node.getLeft() != null) && (node.getRight() != null)) {
-            Node parent = getParent(node);
 
-            if (parent == null) {
-                return; /// ked je parent null aj tak by sa mal spravit bez
-                // použitia parentu
+
+            // when node is root ROOT TRUE
+            if (node == root) {
+                //
+                Node minRightNode = node.getMinRightNode();
+                minRightNode.setLeft(node.getLeft());   // set left
+                minRightNode.setRight(node.getRight()); // set right
+
+
+                // when mingrighnode have the right child we have to change parent set left
+                if (minRightNode.getRight() != null) {
+                    // search minrighnode parent and set left
+                    Node parentMinR = getParent(minRightNode);
+
+                    parentMinR.setLeft(minRightNode.getRight());
+
+                }
+
+                node.setLeft(null);
+                node.setRight(null);
+
+            } else { // node isnt ROOT
+
+                // question Where is node which I would like to delete,  is on the left side or right side
+
+                // left side
+                if (node == getParent(node).getLeft()) {
+                    //minRight is right child node which we delete
+
+                    Node minRightNode = node.getMinRightNode();
+                    Node parentNode = getParent(node);
+
+                    if (node.getRight() == minRightNode) {
+
+                        parentNode.setLeft(minRightNode);
+
+                        minRightNode.setLeft(node.getLeft());
+
+                    } else if (node.getRight() != minRightNode) {
+
+                        if (minRightNode.getRight() != null) {
+                            getParent(minRightNode).setLeft(minRightNode.getRight());
+                        }
+
+
+                        parentNode.setLeft(minRightNode);
+
+                        minRightNode.setLeft(node.getLeft());
+
+                        minRightNode.setRight(node.getRight());
+
+
+                    }
+                    node.setLeft(null);
+                    node.setRight(null);
+
+
+                } else if (node == getParent(node).getRight()) {
+                    Node minRightNode = node.getMinRightNode();
+                    Node parentNode = getParent(node);
+
+                    if (minRightNode == node.getRight()) {
+                        parentNode.setRight(minRightNode);
+                        minRightNode.setLeft(node.getLeft());
+
+
+                    } else if (minRightNode != node.getRight()) {
+                        parentNode.setRight(minRightNode);
+
+                        if (minRightNode.getRight() != null) {
+                            getParent(minRightNode).setLeft(minRightNode.getRight());
+
+                        }
+
+                        minRightNode.setLeft(node.getLeft());
+                        minRightNode.setRight(node.getRight());
+
+                    }
+
+                    node.setLeft(null);
+                    node.setRight(null);
+                }
             }
 
 
         }
+
 
     }
 
@@ -170,24 +247,62 @@ public class Tree {
      /*   if (root != null) {
             root.inOrder();
         }*/
-    // use the function in order and every node check that have min 1 child
+        // use the function in order and every node check that have min 1 child
         // left or right if no push into List and
-        return null;
+
+
+        List<Node> list = new ArrayList<>();
+        getListOfLeafsRec(root, list);
+        return list;
+
 
     }
-    public int getHeight(){
+
+    private void getListOfLeafsRec(Node node, List<Node> list) {
+        if (node.isLeaf())
+            list.add(node);
+        else {
+            if (node.getLeft() != null)
+                getListOfLeafsRec(node.getLeft(), list);
+            if (node.getRight() != null)
+                getListOfLeafsRec(node.getRight(), list);
+        }
+    }
+
+
+    public int getHeight() {
         // kolko krat sa my opakuje cyklus podla toho
         // nezabudni nulovat pomocnu hodnotu
 
         //
-        return -1;
+
+
+        if (root == null)
+            return -1;
+
+        if (root.isLeaf())
+            return 0;
+
+        int max = 0;
+        max = getHeightRec(-1, max, root);
+        return max;
+
     }
 
 
-
-
-
-
+    private int getHeightRec(int i, int max, Node node) {
+        i++;
+        if (node.isLeaf()) {
+            if (i > max)
+                max = i;
+            return max;
+        }
+        if (node.getLeft() != null)
+            max = getHeightRec(i, max, node.getLeft());
+        if (node.getRight() != null)
+            max = getHeightRec(i, max, node.getRight());
+        return max;
+    }
 
 
 }

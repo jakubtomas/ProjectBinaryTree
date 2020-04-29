@@ -212,6 +212,86 @@ class TreeTest {
         assertEquals(-5555, node1.getLeft().getKey());
 
 
+
+        ////////////////////////////////////////////////////////////////////
+
+
+        // first test delete node which is on the left side parent and
+        // minnode dosnt have right child and isnt right child deleted node
+
+
+        /*  myTree.remove(node1);
+
+        assertEquals(10,node3.getRight().getKey());
+        assertEquals(4,node3.getLeft().getKey());
+        assertEquals(20,myTree.getParent(node3).getKey());
+
+        assertNull(node1.getLeft());
+        assertNull(node1.getRight());
+      */
+
+
+        //////////////////////////////////////////////////////////////////////
+
+
+
+
+
+        // min right is right child  delete node  without right child
+
+      /*      myTree.remove(node3);
+            myTree.remove(node1);
+
+        assertNull(node2.getRight());
+        assertEquals(4,node2.getLeft().getKey());
+        assertEquals(20,myTree.getParent(node2).getKey());
+
+        assertNull(node1.getLeft());
+        assertNull(node1.getRight());
+
+        assertNull(node3.getLeft());
+        assertNull(node3.getRight());
+*/
+
+
+
+
+        //////////////////////////////////////////////////////////
+
+       // min right is right child  delete node  with right child
+
+       /* Node node12 = new Node(11, "jedenast");
+
+        myTree.addNode(node12);
+        myTree.remove(node3);
+        myTree.remove(node1);
+
+        assertEquals(11,node2.getRight().getKey());
+        assertEquals(4,node2.getLeft().getKey());
+        assertEquals(20,myTree.getParent(node2).getKey());
+
+        assertNull(node1.getLeft());
+        assertNull(node1.getRight());
+
+        assertNull(node3.getLeft());
+        assertNull(node3.getRight());*/
+
+        /////////////////////////////////////////////////////////////////
+
+        // remove node which is right child parent and minright isnt
+        //right child deleted node and dosnt have the right child
+
+
+      /*  myTree.remove(node4);
+
+        assertEquals(22, node6.getLeft().getKey());
+        assertEquals(30, node6.getRight().getKey());
+        assertEquals(20, myTree.getParent(node6).getKey());
+
+        assertNull(node4.getRight());
+        assertNull(node4.getLeft());
+*/
+
     }
 
     @org.junit.jupiter.api.Test
